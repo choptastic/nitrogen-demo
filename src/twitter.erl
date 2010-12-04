@@ -8,11 +8,16 @@ main() -> #template{file="site/templates/bare.html"}.
 title() -> "Twitter Example with Comet".
 
 body() ->
-	"<b>Hello</b><input type=text value=whatever>",
 	LastSearchTerm = wf:session_default(twitterterm,"Erlang"),
 	wf:wire(search,term,#validate{validators=[
 		#is_required{text="Required"}
-	]}).
+	]}),
+	#panel{id=wrapper,body=[
+		#textbox{id=term,text=LastSearchTerm},
+		#button{id=search,postback=search,text="Search"},
+		#span{id=controllers},
+		#span{id=results}
+	]}.
 	
 
 event(pause) ->
